@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ExpandableView">
+        <attr name="customTitle" format="string"/>
+        <attr name="customContent" format="string"/>
+        <attr name="icon" format="reference"/>
+        <attr name="isRed" format="boolean"/>
+        <attr name="customContentLayout" format="reference"/>
+    </declare-styleable>
+</resources>
