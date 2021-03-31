@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">PokeAPI</string>
     <string name="pokeapi">PokeAPI</string>
+    <string name="info">About this Pokémon</string>
+    <string name="height">Height:</string>
+    <string name="weight">Weight:</string>
+    <string name="order">Order:</string>
+    <string name="abilities">Abilities</string>
+    <string name="loading_abilities">Loading Abilities...</string>
+    <string name="types">Types</string>
 </resources>

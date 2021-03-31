@@ -26,4 +26,10 @@ public class PokemonDetailsActivity extends AppCompatActivity {
         pokemonDetailsPresenter = new PokemonDetailsPresenter(pokemonDetailsFragment);
     }
 
+    @Override
+    public void onBackPressed() {
+        pokemonDetailsFragment.onBackPressed();
+        super.onBackPressed();
+    }
+
 }

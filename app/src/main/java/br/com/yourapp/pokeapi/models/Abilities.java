@@ -15,7 +15,7 @@ public class Abilities implements Serializable {
     @SerializedName("slot")
     public int slot;
 
-    public class Ability {
+    public class Ability implements Serializable {
         @SerializedName("name")
         public String name;
 

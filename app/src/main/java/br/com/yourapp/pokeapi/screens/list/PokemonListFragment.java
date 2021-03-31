@@ -18,6 +18,7 @@ import java.util.List;
 
 import br.com.yourapp.pokeapi.R;
 import br.com.yourapp.pokeapi.interfaces.OnInitialLoadCallback;
+import br.com.yourapp.pokeapi.interfaces.OnNextPageLoadCallback;
 import br.com.yourapp.pokeapi.models.Pokemon;
 import br.com.yourapp.pokeapi.screens.list.adapters.PokemonListAdapter;
 import br.com.yourapp.pokeapi.utils.ActivityUtils;
@@ -28,21 +29,18 @@ import static dagger.internal.Preconditions.checkNotNull;
 
 public class PokemonListFragment extends Fragment implements PokemonListContract.View {
 
-    @BindView(R.id.galleryList)
-    public RecyclerView galleryList;
+    @BindView(R.id.pokemonList)
+    public RecyclerView pokemonList;
 
     @BindView(R.id.lottieAnimationView)
     public LottieAnimationView lottieAnimationView;
 
-    @BindView(R.id.pullToRefresh)
-    SwipeRefreshLayout pullToRefresh;
-
     public PokemonListContract.Presenter presenter;
-    private int currentPage = 1;
 
     private PokemonListAdapter pokemonListAdapter;
-
     private GridLayoutManager gridLayoutManager;
+
+    private boolean isLoadingNextPage = false;
 
     public static PokemonListFragment newInstance() {
         PokemonListFragment pokemonListFragment = new PokemonListFragment();
@@ -63,20 +61,22 @@ public class PokemonListFragment extends Fragment implements PokemonListContract
 
         presenter.initialLoad(onInitialLoadCallback);
 
-        galleryList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        pokemonList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    currentPage++;
-
-                    lottieAnimationView.setAlpha(0f);
-                    lottieAnimationView.setVisibility(View.VISIBLE);
-                    lottieAnimationView.animate().alpha(1f).setDuration(300).start();
+                    if(!isLoadingNextPage) {
+                        isLoadingNextPage = true;
+                        lottieAnimationView.setAlpha(0f);
+                        lottieAnimationView.setVisibility(View.VISIBLE);
+                        lottieAnimationView.animate().alpha(1f).setDuration(300).withEndAction(() -> {
+                            presenter.loadNextPage(onNextPageLoadCallback);
+                        }).start();
+                    }
                 }
             }
         });
-        pullToRefresh.setOnRefreshListener(() -> presenter.initialLoad(onInitialLoadCallback));
 
         return view;
     }
@@ -101,15 +101,31 @@ public class PokemonListFragment extends Fragment implements PokemonListContract
         @Override
         public void onLoad(List<Pokemon> pokemonList) {
             pokemonListAdapter = new PokemonListAdapter(context(), (ArrayList) pokemonList);
-            galleryList.setAdapter(pokemonListAdapter);
-            galleryList.setLayoutManager(gridLayoutManager);
-            pullToRefresh.setRefreshing(false);
+            PokemonListFragment.this.pokemonList.setAdapter(pokemonListAdapter);
+            PokemonListFragment.this.pokemonList.setLayoutManager(gridLayoutManager);
         }
 
         @Override
         public void onError(String error) {
             ActivityUtils.showMessageDialog(context(), "An error occurred!");
-            pullToRefresh.setRefreshing(false);
+        }
+    };
+
+    public OnNextPageLoadCallback onNextPageLoadCallback = new OnNextPageLoadCallback() {
+        @Override
+        public void onLoad(List<Pokemon> pokemonList) {
+            lottieAnimationView.setAlpha(1f);
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            lottieAnimationView.animate().alpha(0f).setDuration(300).withEndAction(() -> {
+                pokemonListAdapter.add(pokemonList);
+                isLoadingNextPage = false;
+                lottieAnimationView.setVisibility(View.GONE);
+            }).start();
+        }
+
+        @Override
+        public void onError(String error) {
+            ActivityUtils.showMessageDialog(context(), "An error occurred!");
         }
     };
 }

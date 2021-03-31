@@ -3,6 +3,7 @@ package br.com.yourapp.pokeapi.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.sql.Types;
 import java.util.List;
 
 public class PokemonInfo implements Serializable {
@@ -42,7 +43,7 @@ public class PokemonInfo implements Serializable {
     @SerializedName("sprites")
     public Sprites sprites;
 
-    public class Sprites {
+    public class Sprites implements Serializable {
         @SerializedName("back_default")
         public String back_default;
 
@@ -71,7 +72,26 @@ public class PokemonInfo implements Serializable {
         public Other other;
     }
 
-    public class Other {
+    @SerializedName("types")
+    public List<Types> types;
+
+    public class Types implements Serializable {
+        @SerializedName("slot")
+        public String slot;
+
+        @SerializedName("type")
+        public Type type;
+    }
+
+    public class Type implements Serializable {
+        @SerializedName("name")
+        public String name;
+
+        @SerializedName("url")
+        public String url;
+    }
+
+    public class Other implements Serializable {
         @SerializedName("dream_world")
         public DreamWorld dream_world;
 
@@ -79,7 +99,7 @@ public class PokemonInfo implements Serializable {
         public OfficialArtwork official_artwork;
     }
 
-    public class DreamWorld {
+    public class DreamWorld implements Serializable {
         @SerializedName("front_default")
         public String front_default;
 
@@ -87,7 +107,7 @@ public class PokemonInfo implements Serializable {
         public String front_female;
     }
 
-    public class OfficialArtwork {
+    public class OfficialArtwork implements Serializable {
         @SerializedName("front_default")
         public String front_default;
     }

@@ -1,5 +1,6 @@
 package br.com.yourapp.pokeapi.di.api;
 
+import br.com.yourapp.pokeapi.models.AbilityDetails;
 import br.com.yourapp.pokeapi.models.PokemonInfo;
 import br.com.yourapp.pokeapi.models.PokemonSearchResponse;
 import retrofit2.Call;
@@ -13,4 +14,13 @@ public interface PokeAPI {
 
     @GET
     Call<PokemonInfo> getPokemonInfo(@Url String url);
+
+    @GET
+    Call<AbilityDetails> getAbilityDetails(@Url String url);
+
+    @GET
+    Call<PokemonInfo.Type> getType(@Url String url);
+
+    @GET
+    Call<PokemonSearchResponse> getPokemonsWithUrl(@Url String url);
 }

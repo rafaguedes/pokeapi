@@ -17,7 +17,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="350dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleTextColor="@color/colorAccent"
             app:title=""
@@ -56,31 +56,25 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="#fff">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/pullToRefresh"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pokemonList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@id/lottieAnimationView" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/galleryList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/lottieAnimationView"/>
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottieAnimationView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:lottie_rawRes="@raw/loading"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                app:lottie_loop="true"
-                android:layout_alignParentBottom="true"
-                app:lottie_autoPlay="true" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:lottie_rawRes="@raw/loading"
+            android:layout_gravity="center"
+            app:lottie_loop="true"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            app:lottie_autoPlay="true" />
 
     </RelativeLayout>
 
