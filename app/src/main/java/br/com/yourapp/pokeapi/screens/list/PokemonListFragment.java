@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.yourapp.pokeapi.R;
-import br.com.yourapp.pokeapi.interfaces.OnImageClickedCallback;
 import br.com.yourapp.pokeapi.interfaces.OnInitialLoadCallback;
-import br.com.yourapp.pokeapi.interfaces.OnPageLoadCallback;
 import br.com.yourapp.pokeapi.models.Pokemon;
 import br.com.yourapp.pokeapi.screens.list.adapters.PokemonListAdapter;
 import br.com.yourapp.pokeapi.utils.ActivityUtils;
@@ -58,7 +56,7 @@ public class PokemonListFragment extends Fragment implements PokemonListContract
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_gallery, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, view);
 
         gridLayoutManager = new GridLayoutManager(getContext(), 1);
@@ -75,21 +73,6 @@ public class PokemonListFragment extends Fragment implements PokemonListContract
                     lottieAnimationView.setAlpha(0f);
                     lottieAnimationView.setVisibility(View.VISIBLE);
                     lottieAnimationView.animate().alpha(1f).setDuration(300).start();
-
-                    presenter.loadPage(currentPage, new OnPageLoadCallback() {
-                        @Override
-                        public void onLoad(List<Pokemon> pokemonList) {
-                            pokemonListAdapter.addPage(pokemonList);
-                            pokemonListAdapter.notifyDataSetChanged();
-                            lottieAnimationView.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onError(String error) {
-                            ActivityUtils.showMessageDialog(context(), "An error occurred!");
-                            lottieAnimationView.setVisibility(View.GONE);
-                        }
-                    });
                 }
             }
         });

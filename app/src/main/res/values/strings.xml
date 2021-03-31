@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Gallery Mindera</string>
-    <string name="image_gallery">Image Gallery</string>
+    <string name="app_name">PokeAPI</string>
+    <string name="pokeapi">PokeAPI</string>
 </resources>

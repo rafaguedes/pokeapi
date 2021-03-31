@@ -6,7 +6,6 @@ import br.com.yourapp.pokeapi.di.api.PokeAPI;
 import br.com.yourapp.pokeapi.di.component.DaggerPokeComponent;
 import br.com.yourapp.pokeapi.di.modules.ContextModule;
 import br.com.yourapp.pokeapi.interfaces.OnInitialLoadCallback;
-import br.com.yourapp.pokeapi.interfaces.OnPageLoadCallback;
 import br.com.yourapp.pokeapi.models.PokemonSearchResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +48,4 @@ public class PokemonListPresenter implements PokemonListContract.Presenter {
         });
     }
 
-    @Override
-    public void loadPage(int currentPage, OnPageLoadCallback onPageLoadCallback) {
-    }
 }

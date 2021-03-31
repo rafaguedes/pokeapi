@@ -12,10 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import br.com.yourapp.pokeapi.R;
-import br.com.yourapp.pokeapi.interfaces.OnImageClickedCallback;
 import br.com.yourapp.pokeapi.models.Pokemon;
 
 public class PokemonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -33,28 +31,28 @@ public class PokemonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View contactView = inflater.inflate(R.layout.item_gallery, parent, false);
-        RecyclerView.ViewHolder viewHolder = new PokemonListAdapter.GalleryHolder(contactView);
+        View contactView = inflater.inflate(R.layout.item_list, parent, false);
+        RecyclerView.ViewHolder viewHolder = new PokemonHolder(contactView);
 
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        GalleryHolder galleryViewHolder = (GalleryHolder) viewHolder;
+        PokemonHolder pokemonHolder = (PokemonHolder) viewHolder;
         Pokemon pokemon = pokemonList.get(position);
-        galleryViewHolder.imageView.setImageResource(R.drawable.picture_placeholder);
+        pokemonHolder.imageView.setImageResource(R.drawable.picture_placeholder);
 
         pokemon.loadPokemonInfo(context, pokemonInfo -> {
-            galleryViewHolder.txtName.setText(pokemonInfo.name.toUpperCase());
+            pokemonHolder.txtName.setText(pokemonInfo.name.toUpperCase());
             Picasso.get()
                     .load(pokemonInfo.sprites.other.official_artwork.front_default)
                     .placeholder(R.drawable.picture_placeholder)
                     .error(R.drawable.error_placeholder)
-                    .into(galleryViewHolder.imageView);
+                    .into(pokemonHolder.imageView);
         });
 
-        galleryViewHolder.imageView.setOnClickListener(button -> {
+        pokemonHolder.imageView.setOnClickListener(button -> {
 
         });
     }
@@ -64,14 +62,10 @@ public class PokemonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return pokemonList.size();
     }
 
-    public void addPage(List<Pokemon> pokemonList) {
-        this.pokemonList.addAll(pokemonList);
-    }
-
-    public class GalleryHolder extends RecyclerView.ViewHolder {
+    public class PokemonHolder extends RecyclerView.ViewHolder {
         public final ImageView imageView;
         public final TextView txtName;
-        public GalleryHolder(View itemView) {
+        public PokemonHolder(View itemView) {
             super(itemView);
             this.imageView = itemView.findViewById(R.id.imageView);
             this.txtName = itemView.findViewById(R.id.txtName);

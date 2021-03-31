@@ -44,7 +44,7 @@
                     android:padding="20dp"
                     android:textSize="32sp"
                     android:textColor="#FFF"
-                    android:text="Bulbasaur"/>
+                    android:text=""/>
 
             </RelativeLayout>
 
