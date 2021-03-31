@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -37,7 +40,10 @@ dependencies {
     //Injection and API Requests
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+
     implementation 'com.google.dagger:dagger:2.14.1'
+    kapt 'com.google.dagger:dagger-compiler:2.14.1'
+
     annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
     implementation 'com.squareup.okhttp3:okhttp:4.0.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.0.1'
@@ -51,7 +57,7 @@ dependencies {
 
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.0.0'
 
     //Images
     implementation 'com.squareup.picasso:picasso:2.71828'
